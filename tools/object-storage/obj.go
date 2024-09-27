@@ -28,7 +28,8 @@ func main() {
 	Objstore := app.Command("block-sync", `Using Thanos to store the data`)
 	Objstore.Flag("path", "Path for The TSDB data in prometheus").Required().StringVar(&s.TsdbPath)
 	Objstore.Flag("objstore.config-file", "Path for The Config file").Required().StringVar(&s.ObjectConfig)
-	Objstore.Flag("key", "Path for the Key where to store block data").StringVar(&s.ObjectKey)
-	Objstore.Command("upload", "Uploading data").Action(s.Upload)
+	Objstore.Flag("key", "Path for the Key where to store block data").Required().StringVar(&s.ObjectKey)
+	Objstore.Command("upload", "Uploading data").Action(s.upload)
+	Objstore.Command("download", "Downloading data").Action(s.download)
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 }
