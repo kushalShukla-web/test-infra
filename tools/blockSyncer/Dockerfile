@@ -1,6 +1,6 @@
 FROM quay.io/prometheus/busybox:latest
 LABEL maintainer="The Prometheus Authors <prometheus-developers@googlegroups.com>"
 
-COPY object-storage /bin/object-storage
+COPY blockSyncer /bin/blocksyncer
 
-ENTRYPOINT ["/bin/object-storage"]
+ENTRYPOINT ["/bin/blocksyncer"]
