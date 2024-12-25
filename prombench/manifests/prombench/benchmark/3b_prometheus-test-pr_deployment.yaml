@@ -34,7 +34,7 @@ spec:
         runAsUser: 0
       initContainers:
       - name: prometheus-builder
-        image: kushalshukla/builder
+        image: docker.io/prominfra/prometheus-builder:master
         imagePullPolicy: Always
         env:
         - name: PR_NUMBER
@@ -48,17 +48,15 @@ spec:
         volumeMounts:
         - name: prometheus-executable
           mountPath: /prometheus-builder
-        - name: key
-          mountPath: /config     
       - name: data-downloader
-        image: kushalshukla/writer
+        image: docker.io/prominfra/block-sync:master
         imagePullPolicy: Always                
         volumeMounts:
         - name: instance-ssd
           mountPath: /data
         - name: bucket-config
           mountPath: /config
-        - name: key
+        - name: blocksync-location-key
           mountPath: /key
       containers:
       - name: prometheus
@@ -109,7 +107,7 @@ spec:
       - name: bucket-config   # Define the Secret volume
         secret:
           secretName: bucket-secret
-      - name: key
+      - name: blocksync-location-key
         configMap:
           name: blocksync-config                 
       terminationGracePeriodSeconds: 300
